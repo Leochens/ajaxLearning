@@ -1,0 +1,124 @@
+
+
+##知识点|填坑|BUG
+
+
+#1.php文件中对post还是get请求的判断
+
+
+    if($_SERVER['REQUEST_METHOD']=="GET"){
+        /*get code*/
+    }elseif($_SERVER['REQUEST_METHOD']=="POST")
+    {
+        /*post  code*/
+    }
+
+
+
+#2.前端页面对于ajax调用get还是post请求的方法
+
+
+    (1).创建 XHR对象
+    (2).open()
+    (*) 如果post请求需要设置请求头
+    ( )   request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    (3).send()
+    (4).判断状态码 为4时说明服务器接受成功
+    (5).动态的修改dom值 来显示异步加载内容
+
+
+
+
+
+
+#3.dom小技巧
+
+
+    给dom结点增加事件监听
+        document.getElementById('demo').onclick=function(){ /*code*/ }
+
+
+    
+
+#4.两种解析json的方法
+    
+
+    1.eval
+    2.JSON.parse
+    *.注意：eval的安全性不是很好 比如会执行json字符串里的js代码
+
+
+
+#5.jQuery的调用Ajax的语法
+    
+
+    1.jquery技巧  
+        a.给dom元素增加事件监听
+        b.选择dom元素
+        c.如何在页面加载完成后执行js
+    2.Ajax的调用
+        $.ajax({
+            type:**,
+            url:**,
+            dataType:**,
+            sucess:function(data){
+                /*code*/
+                },
+            error:function(jqXHR){
+                /*code*/
+            }
+            })
+    3.Ajax调用属性
+        1.type:     "GET"||"POST"
+        2.url:      要请求的url
+        3.dataType:   "json"
+        4.sucess    执行成功后的回调函数
+            data参数： json的返回对象
+        5.error     执行失败后的回调函数
+            jqXHR参数：包含状态码
+
+
+#6.如何解决跨域请求？
+
+
+
+    1.什么是跨域？
+        协议不同，域名(包括主域名、子域名)不同，端口不同的请求调用就是跨域
+        如www.abc.com 调用 www.def.com 就是跨域
+    2.在后端做一个代理 在后端调用跨域请求 得到结果后返回给前端
+    3.使用jsonp jquery的ajax自带了jsonp
+        详见jsonp_client.html jsonp_server.php
+        A.在前台ajax对象里增加一个字段jsonp:"这里是jsonp变量名"，
+            修改dataType为jsonp
+        B.在后端接收jsonp 然后返回jsonp.'({要返回的json对象})'
+    4.jsonp不支持post请求！
+        原因：因为jsonp的原理就是利用了script标签的跨域 而script不支持post
+        详见本目录下<a href=".jsonp原理.jpg">jsonp原理.jpg</a>
+    5.XHR2跨域 
+        只需在服务器端设置头
+        header("Access-Control-Allow-Origin:*");
+        header("Access-Control-Allow-Methods:POST,GET");即可
+
+#7.总结一些：
+
+
+    1.Ajax主要的功能是实现了浏览器端 异步 访问服务器：通过浏览器的XMLHttpRequest对象发出小部分数据，与服务端进行交互，
+    服务端返回小部分数据，然后更新客户端的部分页面。
+    2.json是Ajax发送小部分数据的一种轻量级数据格式，可以简单易懂的给服务器或者浏览器交互数据，包括jason对象，jason数组对象。
+    3.跨域的原理是：协议://子域名.主域名:端口号/服务端地址，除了服务端地址的改变叫做重定向意外，其他几个可变更的参数中任意一个的改变就叫做跨域。
+
+
+#8.Ajax应用
+    1.比如百度的异步搜索过滤内容数据
+        说白了就是关键词联想
+    2.异步加载图片
+    3.异步判断表单正确性
+
+把最开始的例子改写成json的返回格式 前端也是要改写
+
+
+用jQuery来进行改写 了解jQuery语法及Ajax使用
+
+
+
+
