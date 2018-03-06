@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+<pre style="background: #eee;">
+    {
+        "staff":[
+            {"name":"ZHL","age":11},
+            {"name":"LYD","age":10},
+            {"name":"HLW","age":25}
+        ]
+    }
+</pre>
+<h3>eval解析结果</h3>
+<p id="eval"></p>
+
+
+<h3>jsonparse解析结果</h3>
+<p id="parse"></p>
+
+<button id="jiexi" onclick="jiexi()">解析</button>
+<button id="fun"  onclick="change()">点击改变json</button>
+<h3 id="haha" style="display: none;">eval不安全 会执行json里的js代码</h3>
+<script>
+
+    function jiexi() {
+      
+    //1.
+    var str=document.getElementsByTagName('pre')[0].innerHTML;
+    document.getElementById("eval").innerHTML=eval('('+str+')').staff[0].name;
+    //2.
+    document.getElementById("parse").innerHTML=JSON.parse(str).staff[0].name;
+
+    }
+    function change() {
+        document.getElementsByTagName('pre')[0].innerHTML='{"staff":[{"name":alert("哈哈我被eval执行了！"),"age":11},{"name":"LYD","age":10},{"name":"HLW","age":25}]} ';
+       document.getElementById('jiexi').innerHTML="再点击我解析json";
+       document.getElementById('haha').style.display="block";
+    }
+
+</script>
+
+</body>
+</html>
