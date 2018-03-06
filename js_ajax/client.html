@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+</head>
+<body>
+
+<div>
+    <input id='inp' type="" name="" placeholder="请输入查询编号"><button id="query">查询</button>
+    
+</div>
+<div>
+    <input id="post_name" type="" name="">
+    <input id="post_num" type="" name="">
+    <input id="post_sex" type="" name="">
+    <button id="save">保存</button>
+
+</div>
+<p id=res></p>
+<style type="text/css">
+    
+</style>
+
+<script>
+
+    //ajax异步请求
+    document.getElementById("query").onclick=function(){
+        //给按钮添加事件
+        var request=new XMLHttpRequest();
+        request.open('GET','server.php?num='+document.getElementById('inp').value,true);
+        request.send();
+        request.onreadystatechange=function(){
+            if(request.readyState===4)
+            {
+                if(request.status===200)
+                {
+                    document.getElementById('res').innerHTML=request.responseText;
+                }
+                else
+                {
+                    alert("请求失败"+request.status);
+                }
+            }
+        }
+    }
+document.getElementById("save").onclick=function(){
+        //给按钮添加事件
+        var request=new XMLHttpRequest();
+        request.open('POST','server.php',true);
+        var data='name='+document.getElementById('post_name').value+
+        '&num='+document.getElementById('post_num').value+
+        '&sex='+document.getElementById('post_sex').value;
+
+        //很重要！一定要设置contenttype
+        request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+        request.send(data);
+        request.onreadystatechange=function(){
+            if(request.readyState===4)
+            {
+                if(request.status===200)
+                {
+                    document.getElementById('res').innerHTML=request.responseText;
+                }
+                else
+                {
+                    alert("请求失败"+request.status);
+                }
+            }
+        }
+
+
+
+    }    
+</script>
+</body>
+
+</html>
