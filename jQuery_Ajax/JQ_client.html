@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <script src="jquery.js"></script>
+</head>
+<body>
+
+<div>
+    <input id='inp' type="" name="" placeholder="请输入查询编号"><button id="query">查询</button>
+    
+</div>
+<div>
+    <input id="post_name" type="" name="">
+    <input id="post_num" type="" name="">
+    <input id="post_sex" type="" name="">
+    <button id="save">保存</button>
+
+</div>
+<p id=res></p>
+<style type="text/css">
+    
+</style>
+
+<script>
+
+
+    //jq实现的ajax异步请求
+    $(document).ready(function() {
+        $('#query').click(function(){
+       
+            $.ajax({
+                type:"GET",
+                url:"json_server.php?num="+$("#inp").val(),
+                //dataType 大写
+                dataType:"json",
+                success:function(data){
+                    if(data.success)
+                    {
+                        $("#res").html(data.msg+'  '+data.data.name+'  '+data.data.num+' '+data.data.sex);
+                    }else{
+                        $("#res").html('出现错误：'+data.msg);
+                    }
+
+                },
+                error:function(jqXHR){
+                    alert("出现错误："+jqXHR.status);
+                }
+            });
+        });
+        $('#save').click(function(){
+       
+            $.ajax({
+                type:"POST",
+                url:"json_server.php",
+                data:{
+                    name:$("#post_name").val(),
+                    sex:$("#post_sex").val(),
+                    num:$("#post_num").val()
+                },
+                //dataType 大写
+                dataType:"json",
+                success:function(data){
+                    if(data.success)
+                    {
+                        $("#res").html(data.msg+'  '+data.data.name+'  '+data.data.num+' '+data.data.sex);
+                    }else{
+                        $("#res").html('出现错误：'+data.msg);
+                    }
+
+                },
+                error:function(jqXHR){
+                    alert("出现错误："+jqXHR.status);
+                }
+            });
+        });        
+    });
+ 
+</script>
+</body>
+
+</html>
